@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import MapView from 'react-native-maps'
 import { View } from 'react-native';
+import Search from '../Search'
 
+import Geolocation from 'react-native-geolocation-service';
 
 export default class Map extends Component {
     state = {
         region: null
     }
     async componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            ({ coords: {latitude, longitude} }) => {
+        Geolocation.getCurrentPosition(
+            ({ coords: { latitude, longitude } }) => {
                 this.setState({
                     region: {
                         latitude,
@@ -37,6 +39,7 @@ export default class Map extends Component {
                     showsUserLocation
                     loadingEnabled
                 />
+                <Search />
             </View>
         )
     }
