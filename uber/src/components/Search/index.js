@@ -5,8 +5,14 @@ import { GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete
 // import { Container } from './styles';
 
 export default class Search extends Component {
+
+    state = {
+        searchFocused: false,
+    }
+
     render() {
-        const {onLocationSelected } = this.props;
+        const { onLocationSelected } = this.props;
+        const { searchFocused } = this.state;
 
         return(
         <GooglePlacesAutocomplete  
@@ -18,9 +24,12 @@ export default class Search extends Component {
                 language: 'pt',
             }}
             textInputProps={{
+                onFocus: () => { this.setState({ searchFocused: true }) },
+                onBlur: () => { this.setState({ searchFocused: false }) },
                 autoCapitalize: "none",
                 autoCorrect: false,
             }}  
+            listViewDisplayed={ searchFocused }
             fetchDetails //infos adicionais latitude longitude
             enablePoweredByContainer={false}
             styles={{
