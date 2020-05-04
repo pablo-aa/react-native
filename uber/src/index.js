@@ -6,5 +6,4 @@ const App = () => (
     <Map />
 )
 
-
 export default App;

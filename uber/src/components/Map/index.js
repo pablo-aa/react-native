@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 import MapView from 'react-native-maps'
 import { View } from 'react-native';
-import Search from '../Search'
 
+import Search from '../Search'
+import Directions from '../Directions'
 import Geolocation from 'react-native-geolocation-service';
 
 export default class Map extends Component {
     state = {
-        region: null
+        region: null,
+        destination: null,
     }
     async componentDidMount() {
         Geolocation.getCurrentPosition(
-            ({ coords: { latitude, longitude } }) => {
+            async ({ coords: { latitude, longitude } }) => {
                 this.setState({
                     region: {
                         latitude,
@@ -29,8 +31,21 @@ export default class Map extends Component {
             }
         )
     }
+
+    handleLocationSelected = (data, {geometry}) => {
+        const { location: {lat: latitude, lng: longitude}, } = geometry
+        
+        this.setState({
+            destination: {
+               latitude,
+               longitude,
+               title: data.structured_formatting.main_text, 
+            },
+        })
+    }
+
     render() {
-        const {region} = this.state; 
+        const {region, destination} = this.state; 
         return (
             <View style = {{flex: 1}}>
                 <MapView 
@@ -38,8 +53,17 @@ export default class Map extends Component {
                     region={region}
                     showsUserLocation
                     loadingEnabled
-                />
-                <Search />
+                >
+                
+                    {destination && (
+                        <Directions
+                            origin={region}
+                            destination={destination}
+                            onReady={() => {}}
+                        />
+                    )}
+                </MapView>
+                <Search onLocationSelected={this.handleLocationSelected}/>
             </View>
         )
     }
