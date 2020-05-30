@@ -1,4 +1,7 @@
 {
   "name": "uber",
-  "displayName": "uber"
+  "displayName": "uber",
+  "expo": {
+    "sdkVersion": "37.0.8"
+  }
 }
