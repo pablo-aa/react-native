@@ -1,6 +1,6 @@
-** **Projetos utilizando React-Native
+__Projetos utilizando React-Native__
 
-> Rocketseat 
+**_Rocketseat_**
 - Nubank
 - Uber 
 
